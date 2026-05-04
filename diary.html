@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Diary - Rio's College Journey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="site-title">✨ My College Diary ✨</div>
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT ME</a>
+        <a href="diary.html" class="active">DIARY</a>
+        <a href="gallery.html">GALLERY</a>
+        <a href="contact.html">CONTACT</a>
+    </nav>
+
+    <div class="diary-wrapper">
+        
+        <section class="page-content diary-page">
+            <h1>𓆩♡𓆪 My Diary 𓆩♡𓆪</h1>
+            <p class="diary-intro" style="text-align: center; margin: 0 auto; max-width: 600px;"> Where I pour my heart and capture my journey ...</p>
+            <br></br>
+           
+            <div id="staticEntries">
+                
+            </div>
+            
+            
+            <div id="dynamicEntriesSection"></div>
+        </section>
+    </div>
+
+    <script>
+        
+        const STATIC_ENTRIES = [
+            {
+                date: "2024-07-29",
+                title: "Enrollment!",
+                content: "On July 29, 2024, I officially enrolled at the Colegio de Sta. Teresa de Avila (CSTA). It was a significant day for me, and I was grateful to have my mother by my side to support me through the registration process. After we finished the paperwork and I was officially a student, we went to buy my new school uniform. Seeing the new clothes made me realize that school is really starting soon. I feel ready and very excited to start this new part of my life!",
+                images: ["enroll.jfif", "stsn.jfif", "uni.jfif"]
+            },
+            {
+                date: "2024-08-01",
+                title: "First Day!",
+                content: "Today I started my college journey. I felt excited and nervous! 🎓",
+                images: ["first.jfif", "me.jfif"]
+            },
+            {
+                date: "2024-09-20",
+                title: "Acoustic Night!",
+                content: "Acoustic Night is a fun event put together by the HM students. It features live music and a chill vibe where everyone can hang out. It's a great way for the HM department to show their skills in organizing events while everyone enjoys a night of good songs and great company.🎶",
+                images: ["friend.jfif", "acoustic.jfif", "trops.jfif"]
+            },
+            {
+                date: "2024-10-21",
+                title: "Building Cyber Resilience",
+                content: "On October 21, 2024, I attended a seminar at STSN called \"Building Cyber Resilience.\" This event was very helpful because it taught us how to protect our digital information. The speakers explained that cyber resilience isn't just about stopping hackers, but also about how to fix things quickly if a system gets attacked. I learned that being prepared is the best way to keep our data safe and make sure we can keep working even when there are digital threats.🖥️",
+                images: ["freny.jfif", "frenyy.jfif", "cyber.jfif"]
+            },
+            {
+                date: "2024-11-25",
+                title: "1st IT WEEK Experience",
+                content: "Today was the start of my first IT Week, and it was such a great experience! Our group had a booth called Mazetrix. Lots of people came to visit our booth to join the fun. It was a bit busy, but seeing everyone enjoy what we built made all the hard work worth it. I also took some time to walk around and see the other booths. There were so many creative projects and cool tech ideas from other students. 💙",
+                images: ["group.jfif", "mazetrix.jfif", "part.jfif"]
+            },
+            {
+                date: "2024-12-16",
+                title: "Retro Rewind",
+                content: "Today was our Retro Rewind event, and it was so much fun! Everyone dressed up in old-school outfits, and the whole place felt like a trip back in time. There was great music and a lot of energy everywhere. I loved seeing all the different styles from the past. It was a nice break from our usual school days and a great way to celebrate before the year ends. We took a lot of photos and spent the whole time laughing and hanging out with friends. It was definitely a day to remember!💙",
+                images: ["Troops.jfif", "retro.jfif", "firstyr.jfif", "self.jfif"]
+            },
+            {
+                date: "2025-01-10",
+                title: "Enrollment for 1st year Second Semester",
+                content: "Today, I went back to school to enroll for the second semester of my first year. It feels like time is flying! It wasn't as scary as the first time because now I know my way around the campus and how the process works. I made sure all my paperwork was ready and picked my new subjects for the next few months. It's exciting to think about the new things I'm going to learn and the projects I'll be working on soon. After finishing the enrollment, I felt a sense of relief knowing that I'm officially set for the new term. I'm ready to keep working hard and enjoy the rest of my freshman year!",
+                images: ["line.jfif", "payment.jfif"]
+            },
+            {
+                date: "2025-01-23",
+                title: "Evening Schedule",
+                content: "Tonight was my first night attending the Evening Schedule for my classes. It felt very different being on campus as the sun went down. The atmosphere was a bit more quiet and focused compared to the busy morning sessions.",
+                images: ["evening.jfif", "withstacey.jfif"]
+            },
+            {
+                date: "2025-03-07",
+                title: "Dastruct Subject",
+                content: "Today in my Data Structures (Dastruct) class, we tackled some of the more challenging parts of the subject. At first, it felt a bit overwhelming because there are a lot of logic and rules to remember. It's not just about coding; it's about learning how to organize information so that the computer can find it and use it quickly.",
+                images: ["dastract.jfif", "board.jfif", "handson.jfif"]
+            },
+            {
+                date: "2025-10-27",
+                title: "IT Week!",
+                content: "Our section's booth was a hit! Teamwork made it memorable.",
+                images: ["itweek.jfif"]
+            },
+            {
+                date: "2026-03-01",
+                title: "Sports Fest Champions!",
+                featured: true,
+                content: "IT Department won again! Basketball, Volleyball, everything! 🏆",
+                images: ["basketball.jfif", "vball.jfif", "mens.jfif", "last.jfif"]
+            },
+            {
+                date: "2026-03-23",
+                title: "Women's Month",
+                content: "On March 23, 2026, our school held an event in celebration of Women's Month. It was an honor to attend and listen to the guest speaker, Kgd. Kris Roxas. Her work and advocacy are truly inspiring, and I feel grateful to have been one of those who had the opportunity to hear her speak. Happy International Women's Month 💜💟",
+                images: ["women.jfif", "purple.jfif"]
+            },
+            {
+                date: "2026-04-24",
+                title: "Exhibit",
+                content: " Exhibit officially wrapped.This journey was a true roller coaster—full of steep learning curves, unexpected turns, and a lot of heart. Grateful for the happenings that challenged me and the people who stayed for the ride. On to the next chapter. ",
+                images: ["ex6.jfif", "ex8.jfif"]
+            }
+        ];
+
+        
+        window.onload = function() {
+            loadStaticEntries();
+            loadDynamicEntries();
+        };
+
+        function loadStaticEntries() {
+            const container = document.getElementById('staticEntries');
+            container.innerHTML = STATIC_ENTRIES.map(entry => {
+                const dateStr = new Date(entry.date).toLocaleDateString('en-PH');
+                const imagesHtml = entry.images.length > 1 ? 
+                    `<div class="multi-images">${entry.images.map(img => `<img src="${img}" alt="${entry.title}">`).join('')}</div>` :
+                    `<img src="${entry.images[0]}" alt="${entry.title}">`;
+                
+                const featuredClass = entry.featured ? 'featured' : '';
+                
+                return `
+                    <article class="diary-entry ${featuredClass}">
+                        <h3>📅 ${dateStr} - ${entry.title}</h3>
+                        <p>${entry.content}</p>
+                        ${imagesHtml}
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function loadDynamicEntries() {
+            const entries = JSON.parse(localStorage.getItem('fullDiaryEntries')) || [];
+            const container = document.getElementById('dynamicEntriesSection');
+            
+            if (entries.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = `
+                <h3 style="color: #DAA520; margin: 40px 0 25px; text-align: center; border-bottom: 2px solid #DAA520; padding-bottom: 10px;">📱 Recently Saved Entries (${entries.length})</h3>
+                ${entries.slice(0, 8).map(entry => `
+                    <article class="diary-entry full-entry">
+                        <div class="entry-header">
+                            <span class="entry-date">${new Date(entry.date).toLocaleDateString('en-PH')}</span>
+                            <span class="entry-time">${entry.timestamp}</span>
+                        </div>
+                        <h3>${entry.title}</h3>
+                        <p>${entry.content.substring(0, 200)}${entry.content.length > 200 ? '...' : ''}</p>
+                        ${entry.photo ? `<img src="${entry.photo}" alt="Entry photo" class="full-entry-photo">` : ''}
+                        <div class="entry-actions-full">
+                            <button onclick="viewFullEntry(${entry.id})" class="btn small secondary">👁️ View Full</button>
+                            <button onclick="deleteFullEntry(${entry.id})" class="btn small danger">🗑️ Delete</button>
+                        </div>
+                    </article>
+                `).join('')}
+            `;
+        }
+
+        function deleteFullEntry(id) {
+            if (confirm('🗑️ Delete this entry forever?')) {
+                let entries = JSON.parse(localStorage.getItem('fullDiaryEntries')) || [];
+                entries = entries.filter(e => e.id != id);
+                localStorage.setItem('fullDiaryEntries', JSON.stringify(entries));
+                loadDynamicEntries();
+            }
+        }
+
+        function viewFullEntry(id) {
+            const entries = JSON.parse(localStorage.getItem('fullDiaryEntries')) || [];
+            const entry = entries.find(e => e.id == id);
+            if (entry) {
+                const fullContent = `📝 ${entry.title}\n\n${entry.content}\n\n💾 Saved: ${entry.timestamp}`;
+                alert(fullContent);
+            }
+        }
+    </script>
+</body>
+</html>
+ <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 My Diary. All rights reserved.</p>
+        </div>
+    </footer>
