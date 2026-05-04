@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gallery - Rio's Memories</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .album-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;padding:25px;overflow-y:auto;backdrop-filter:blur(20px)}
+        .album-modal.active{display:block}
+        .album-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:35px;color:#fff;padding-bottom:20px;border-bottom:3px solid rgba(255,255,255,0.2)}
+        .album-title-modal{font-size:30px;font-weight:700;text-shadow:2px 2px 8px rgba(0,0,0,0.8)}
+        .album-close{background:rgba(255,255,255,0.2);color:#fff;border:none;font-size:26px;width:55px;height:55px;border-radius:50%;cursor:pointer;backdrop-filter:blur(10px);transition:all .3s}
+        .album-close:hover{background:rgba(255,60,60,0.7);transform:scale(1.15)}
+        .phone-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-width:100%;margin:0 auto}
+        .phone-photo{aspect-ratio:1;border-radius:12px;overflow:hidden;cursor:pointer;position:relative;transition:all .3s;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+        .phone-photo:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+        .phone-photo img{width:100%;height:100%;object-fit:cover}
+        .phone-photo.featured{grid-column:span 2;grid-row:span 2}
+
+        @media (min-width:769px) and (max-width:1024px){.phone-gallery{grid-template-columns:repeat(4,1fr);gap:6px}}
+        @media (min-width:1025px){.phone-gallery{grid-template-columns:repeat(5,1fr);gap:8px}}
+    </style>
+</head>
+<body>
+    <div class="site-title">✨ My College Diary ✨</div>
+    <nav>
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT ME</a>
+        <a href="diary.html">DIARY</a>
+        <a href="gallery.html" class="active">GALLERY</a>
+        <a href="contact.html">CONTACT</a>
+    </nav>
+
+    <section class="page-content gallery-page">
+        <h1>₊˚⊹♡ My Gallery ₊˚⊹♡</h1>
+        
+        <div class="gallery-grid" id="savedAlbumsSection"></div>
+    </section>
+
+    <div class="album-modal" id="albumModal">
+        <div class="album-header">
+            <h2 class="album-title-modal" id="albumTitleModal"></h2>
+            <button class="album-close" onclick="closeAlbumModal()">×</button>
+        </div>
+        <div class="phone-gallery" id="phoneGallery"></div>
+    </div>
+
+    <script>
+        const ALBUMS = {
+            'sports':{title:'🏆 Sports Fest 2k25',photos:['sport8.jfif','sportfest.jfif','sport1.jfif','sport2.jfif','sport3.jfif','sport4.jfif','sport5.jfif','sport6.jfif','sport7.jfif','sport.jfif','sport9.jfif','sport10.jfif']},
+            'itweek1':{title:'💻 1st year IT Week',photos:['mazetrix.jfif','group.jfif','part.jfif','it1.jfif','it2.jfif','it3.jfif','it4.jfif']},
+            'college-moments':{title:'🎓 College Moments',photos:['college8.jfif','moments1.jfif','moments2.jfif','moments3.jfif','college1.jfif','withstacey.jfif','college2.jfif','college3.jfif','college9.jfif','college5.jfif','college11.jfif','college7.jfif','college4.jfif','college10.jfif','college6.jfif']},
+            'csta-pride':{title:'🏫 CSTA Pride',photos:['csta.jfif','csta1.jfif','csta2.jfif','csta3.jfif','first.jfif','csta4.jfif','csta5.jfif']},
+            'itweek2':{title:'💻 2nd year IT Week',photos:['itweek.jfif','itw1.jfif','itw2.jfif','itw3.jfif','itw4.jfif','itw5.jfif','itw6.jfif','itw7.jfif','itw8.jfif','itw9.jfif']},
+            'friends':{title:'👭 Best Friends',photos:['bff1.jfif','bff2.jfif','bff3.jfif','bff4.jfif','bff5.jfif','bff6.jfif','bff7.jfif']},
+            'exhibit':{title:'🕹️ Exhibit!',photos:['ex6.jfif','ex2.jfif','ex3.jfif','ex4.jfif','ex5.jfif','ex1.jfif','ex7.jfif','ex8.jfif']},
+            'women':{title:'💜 Womens Month!',photos:['women6.jfif','women1.jfif','women.jfif','women2.jfif','women3.jfif','women4.jfif','women5.jfif']},
+        };
+
+        function loadAllAlbums(){
+            const saved=JSON.parse(localStorage.getItem('savedGalleryAlbums'))||[];
+            const allAlbums=[...Object.entries(ALBUMS).map(([id,a])=>({id,title:a.title,photos:a.photos})),...saved];
+            const container=document.getElementById('savedAlbumsSection');
+            
+            if(allAlbums.length===0){
+                container.innerHTML='<div style="text-align:center;padding:80px;color:#DEB887">📸 No albums yet!</div>';
+                return;
+            }
+            
+            container.innerHTML=`<h3 style="color:#DAA520;margin:40px 0 30px;text-align:center">📱 All Albums (${allAlbums.length})</h3>
+                ${allAlbums.slice(0,12).map(a=>`
+                    <div class="gallery-item" style="position:relative" data-album-id="${a.id}">
+                        <img src="${a.photos[0]}" alt="${a.title}" style="object-fit:cover;width:100%;height:280px">
+                        <p>${a.title}<br><small>${a.photos.length} photos</small></p>
+                    </div>
+                `).join('')}`;
+            
+            document.querySelectorAll('.gallery-item[data-album-id]').forEach(item=>{
+                item.addEventListener('click',e=>{
+                    openPhoneGallery(item.dataset.albumId);
+                });
+            });
+        }
+
+        function openPhoneGallery(albumId){
+            let album;
+            const saved=JSON.parse(localStorage.getItem('savedGalleryAlbums'))||[];
+            album=saved.find(a=>a.id==albumId)||ALBUMS[albumId];
+            if(album){
+                document.getElementById('albumTitleModal').textContent=`${album.title} (${album.photos.length} photos)`;
+                document.getElementById('phoneGallery').innerHTML=album.photos.map((p,i)=>`
+                    <div class="phone-photo ${i===0?'featured':''}" onclick="openFullPhoto('${p}')">
+                        <img src="${p}" alt="${album.title}">
+                    </div>
+                `).join('');
+                document.getElementById('albumModal').classList.add('active');
+                document.body.style.overflow='hidden';
+            }
+        }
+
+        function closeAlbumModal(){document.getElementById('albumModal').classList.remove('active');document.body.style.overflow='auto'}
+        function openFullPhoto(src){window.open(src,'_blank')}
+        document.getElementById('albumModal').addEventListener('click',e=>e.target===this&&closeAlbumModal());
+        document.addEventListener('keydown',e=>e.key==='Escape'&&closeAlbumModal());
+
+        window.onload=()=>{
+            loadAllAlbums();
+        };
+    </script>
+</body>
+</html>
+ <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 My Diary. All rights reserved.</p>
+        </div>
+    </footer>
